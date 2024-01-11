@@ -1,7 +1,7 @@
 Summary:       Library of functions for manipulating TIFF format image files
 Name:          libtiff
 Version:       4.4.0
-Release:       8%{?dist}
+Release:       10%{?dist}
 License:       libtiff
 URL:           http://www.simplesystems.org/libtiff/
 
@@ -26,6 +26,11 @@ Patch0011: 0011-CVE-2023-0800-CVE-2023-0801-CVE-2023-0802-CVE-2023-0.patch
 Patch0012: 0012-Merge-branch-tiffcrop_correctly_update_buffersize_af.patch
 # CVE-2023-0795 CVE-2023-0796 CVE-2023-0797 CVE-2023-0798 CVE-2023-0799
 Patch0013: 0013-CVE-2023-0795-CVE-2023-0796-CVE-2023-0797-CVE-2023-0.patch
+Patch0014: 0014-CVE-2023-2731-LZWDecode-avoid-crash-when-trying-to-r.patch
+Patch0015: 0015-CVE-2023-26965-tiffcrop-Do-not-reuse-input-buffer-fo.patch
+Patch0016: 0016-CVE-2023-3316-TIFFClose-avoid-NULL-pointer-dereferen.patch
+Patch0017: 0017-CVE-2023-26966-tif_luv-Check-and-correct-for-NaN-dat.patch
+Patch0018: 0018-CVE-2023-3576-Fix-memory-leak-in-tiffcrop.c.patch
 
 
 
@@ -180,6 +185,14 @@ find html -name 'Makefile*' | xargs rm
 %{_mandir}/man1/*
 
 %changelog
+* Tue Aug 08 2023 Matej Mužila <mmuzila@redhat.com> - 4.4.0-10
+- Fix CVE-2023-26965 CVE-2023-3316 CVE-2023-26966 CVE-2023-3576
+- Resolves: CVE-2023-26965 CVE-2023-3316 CVE-2023-26966 CVE-2023-3576
+
+* Thu Jun 08 2023 Matej Mužila <mmuzila@redhat.com> - 4.4.0-9
+- Fix CVE-2023-2731
+- Resolves: CVE-2023-2731
+
 * Tue Mar 21 2023 Matej Mužila <mmuzila@redhat.com> - 4.4.0-8
 - Fix CVE-2023-0800 CVE-2023-0801 CVE-2023-0802 CVE-2023-0803 CVE-2023-0804
   CVE-2023-0795 CVE-2023-0796 CVE-2023-0797 CVE-2023-0798 CVE-2023-0799

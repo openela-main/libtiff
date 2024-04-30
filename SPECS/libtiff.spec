@@ -1,7 +1,7 @@
 Summary:       Library of functions for manipulating TIFF format image files
 Name:          libtiff
 Version:       4.4.0
-Release:       10%{?dist}
+Release:       12%{?dist}
 License:       libtiff
 URL:           http://www.simplesystems.org/libtiff/
 
@@ -31,8 +31,10 @@ Patch0015: 0015-CVE-2023-26965-tiffcrop-Do-not-reuse-input-buffer-fo.patch
 Patch0016: 0016-CVE-2023-3316-TIFFClose-avoid-NULL-pointer-dereferen.patch
 Patch0017: 0017-CVE-2023-26966-tif_luv-Check-and-correct-for-NaN-dat.patch
 Patch0018: 0018-CVE-2023-3576-Fix-memory-leak-in-tiffcrop.c.patch
-
-
+Patch0019: 0019-CVE-2023-40090-Improved-IFD-Loop-Handling-fixes-455.patch
+Patch0020: 0020-CVE-2023-3618-tiffcrop-fix-553-by-considering-error-.patch
+Patch0021: 0021-CVE-2023-40745-CVE-2023-41175-raw2tiff-fix-integer-o.patch
+Patch0022: 0022-CVE-2023-6228-Merge-branch-fix_606_tiffcp_check_also.patch
 
 BuildRequires: gcc, gcc-c++
 BuildRequires: zlib-devel libjpeg-devel jbigkit-devel libzstd-devel libwebp-devel
@@ -185,6 +187,14 @@ find html -name 'Makefile*' | xargs rm
 %{_mandir}/man1/*
 
 %changelog
+* Thu Nov 23 2023 Matej Mužila <mmuzila@redhat.com> - 4.4.0-12
+- Fix CVE-2023-6228
+- Resolves: RHEL-10084
+
+* Wed Oct 04 2023 Matej Mužila <mmuzila@redhat.com> - 4.4.0-11
+- Fix CVE-2023-40090 CVE-2023-3618 CVE-2023-40745 CVE-2023-41175
+- Resolves: RHEL-5458 RHEL-5455 RHEL-5405 RHEL-5450
+
 * Tue Aug 08 2023 Matej Mužila <mmuzila@redhat.com> - 4.4.0-10
 - Fix CVE-2023-26965 CVE-2023-3316 CVE-2023-26966 CVE-2023-3576
 - Resolves: CVE-2023-26965 CVE-2023-3316 CVE-2023-26966 CVE-2023-3576

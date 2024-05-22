@@ -1,7 +1,7 @@
 Summary:       Library of functions for manipulating TIFF format image files
 Name:          libtiff
 Version:       4.0.9
-Release:       29%{?dist}
+Release:       31%{?dist}
 License:       libtiff
 Group:         System Environment/Libraries
 URL:           http://www.simplesystems.org/libtiff/
@@ -49,6 +49,7 @@ Patch0035: 0035-CVE-2022-3597-CVE-2022-3626-CVE-2022-3627-tiffcrop-d.patch
 Patch0036: 0036-CVE-2022-3970-TIFFReadRGBATileExt-fix-unsigned-integ.patch
 Patch0037: 0037-CVE-2022-48281-tiffcrop-Correct-simple-copy-paste-er.patch
 Patch0038: 0038-CVE-2023-0800-CVE-2023-0801-CVE-2023-0802-CVE-2023-0.patch
+Patch0039: 0039-CVE-2022-3599-Revised-handling-of-TIFFTAG_INKNAMES-a.patch
 
 
 BuildRequires: gcc, gcc-c++
@@ -203,9 +204,18 @@ find html -name 'Makefile*' | xargs rm
 %{_mandir}/man1/*
 
 %changelog
+* Fri Jan 05 2024 Matej Mužila <mmuzila@redhat.com> - 4.0.9-31
+- Fix CVE-2022-3599 CVE-2022-4645
+- Resolves: RHEL-5399
+
+* Thu Sep 21 2023 Ondrej Sloup <osloup@redhat.com> - 4.0.9-30
+- Bump specfile to retrigger gating
+- Add tests folder for standard beakerlib
+- Related: RHEL-4683 RHEL-4685 RHEL-4686 RHEL-4687 RHEL-4688
+
 * Tue Aug 08 2023 Matej Mužila <mmuzila@redhat.com> - 4.0.9-29
 - Fix CVE-2023-0800 CVE-2023-0801 CVE-2023-0802 CVE-2023-0803 CVE-2023-0804
-- Resolves: RHEL-5075 RHEL-5078 RHEL-5079 RHEL-5080 RHEL-5081
+- Resolves: RHEL-4683 RHEL-4685 RHEL-4686 RHEL-4687 RHEL-4688
 
 * Tue May 16 2023 Matej Mužila <mmuzila@redhat.com> - 4.0.9-28
 - Fix CVE-2022-48281

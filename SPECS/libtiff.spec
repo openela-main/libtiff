@@ -1,7 +1,7 @@
 Summary:       Library of functions for manipulating TIFF format image files
 Name:          libtiff
 Version:       4.0.9
-Release:       31%{?dist}
+Release:       32%{?dist}
 License:       libtiff
 Group:         System Environment/Libraries
 URL:           http://www.simplesystems.org/libtiff/
@@ -50,7 +50,10 @@ Patch0036: 0036-CVE-2022-3970-TIFFReadRGBATileExt-fix-unsigned-integ.patch
 Patch0037: 0037-CVE-2022-48281-tiffcrop-Correct-simple-copy-paste-er.patch
 Patch0038: 0038-CVE-2023-0800-CVE-2023-0801-CVE-2023-0802-CVE-2023-0.patch
 Patch0039: 0039-CVE-2022-3599-Revised-handling-of-TIFFTAG_INKNAMES-a.patch
-
+Patch0040: 0040-CVE-2018-15209-Merge-branch-avoid_memory_exhaustion_.patch
+Patch0041: 0041-CVE-2023-25433-Merge-branch-tiffcrop_correctly_updat.patch
+Patch0042: 0042-CVE-2023-52356-Merge-branch-fix_622-into-master.patch
+Patch0043: 0043-CVE-2023-6228-Merge-branch-fix_606_tiffcp_check_also.patch
 
 BuildRequires: gcc, gcc-c++
 BuildRequires: zlib-devel libjpeg-devel jbigkit-devel
@@ -204,6 +207,10 @@ find html -name 'Makefile*' | xargs rm
 %{_mandir}/man1/*
 
 %changelog
+* Thu May 16 2024 Matej Mužila <mmuzila@redhat.com> - 4.0.9-32
+- Fix CVE-2023-6228 CVE-2023-52356 CVE-2023-25433 CVE-2018-15209
+- Resolves: RHEL-30682 RHEL-30520 RHEL-30474 RHEL-5406
+
 * Fri Jan 05 2024 Matej Mužila <mmuzila@redhat.com> - 4.0.9-31
 - Fix CVE-2022-3599 CVE-2022-4645
 - Resolves: RHEL-5399

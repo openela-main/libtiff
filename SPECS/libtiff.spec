@@ -1,7 +1,7 @@
 Summary:       Library of functions for manipulating TIFF format image files
 Name:          libtiff
 Version:       4.0.9
-Release:       32%{?dist}
+Release:       33%{?dist}
 License:       libtiff
 Group:         System Environment/Libraries
 URL:           http://www.simplesystems.org/libtiff/
@@ -54,6 +54,10 @@ Patch0040: 0040-CVE-2018-15209-Merge-branch-avoid_memory_exhaustion_.patch
 Patch0041: 0041-CVE-2023-25433-Merge-branch-tiffcrop_correctly_updat.patch
 Patch0042: 0042-CVE-2023-52356-Merge-branch-fix_622-into-master.patch
 Patch0043: 0043-CVE-2023-6228-Merge-branch-fix_606_tiffcp_check_also.patch
+
+# from upstream, for <=4.6.0, RHEL-52927
+# https://gitlab.com/libtiff/libtiff/-/commit/3705f82b6483c7906cf08cd6b9dcdcd59c61d779
+Patch44:       libtiff-4.6.0-CVE-2024-7006.patch
 
 BuildRequires: gcc, gcc-c++
 BuildRequires: zlib-devel libjpeg-devel jbigkit-devel
@@ -207,6 +211,9 @@ find html -name 'Makefile*' | xargs rm
 %{_mandir}/man1/*
 
 %changelog
+* Thu Aug 29 2024 Michal Hlavinka <mhlavink@redhat.com> - 4.0.9-33
+- fix CVE-2024-7006 a null pointer dereference in tif_dirinfo (RHEL-52927)
+
 * Thu May 16 2024 Matej Mužila <mmuzila@redhat.com> - 4.0.9-32
 - Fix CVE-2023-6228 CVE-2023-52356 CVE-2023-25433 CVE-2018-15209
 - Resolves: RHEL-30682 RHEL-30520 RHEL-30474 RHEL-5406

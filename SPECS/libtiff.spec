@@ -1,7 +1,7 @@
 Summary:       Library of functions for manipulating TIFF format image files
 Name:          libtiff
 Version:       4.4.0
-Release:       12%{?dist}.1
+Release:       13%{?dist}
 License:       libtiff
 URL:           http://www.simplesystems.org/libtiff/
 
@@ -191,7 +191,7 @@ find html -name 'Makefile*' | xargs rm
 %{_mandir}/man1/*
 
 %changelog
-* Wed Aug 21 2024 Michal Hlavinka <mhlavink@redhat.com> - 4.4.0-12.1
+* Wed Aug 21 2024 Michal Hlavinka <mhlavink@redhat.com> - 4.4.0-13
 - fix CVE-2024-7006 a null pointer dereference in tif_dirinfo (RHEL-52931)
 
 * Thu Nov 23 2023 Matej Mužila <mmuzila@redhat.com> - 4.4.0-12

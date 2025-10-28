@@ -1,7 +1,7 @@
 Summary:       Library of functions for manipulating TIFF format image files
 Name:          libtiff
 Version:       4.4.0
-Release:       13%{?dist}
+Release:       13%{?dist}.2
 License:       libtiff
 URL:           http://www.simplesystems.org/libtiff/
 
@@ -39,6 +39,12 @@ Patch0022: 0022-CVE-2023-6228-Merge-branch-fix_606_tiffcp_check_also.patch
 # from upstream, for <=4.6.0, RHEL-52931
 # https://gitlab.com/libtiff/libtiff/-/commit/3705f82b6483c7906cf08cd6b9dcdcd59c61d779
 Patch23:       libtiff-4.6.0-CVE-2024-7006.patch
+
+# CVE-2025-9900
+Patch24:       RHEL-112542.patch
+
+# CVE-2025-8176
+Patch25:       RHEL-120243.patch
 
 BuildRequires: gcc, gcc-c++
 BuildRequires: zlib-devel libjpeg-devel jbigkit-devel libzstd-devel libwebp-devel
@@ -191,6 +197,15 @@ find html -name 'Makefile*' | xargs rm
 %{_mandir}/man1/*
 
 %changelog
+* Mon Oct 20 2025 RHEL Packaging Agent <jotnar@redhat.com> - 4.4.0-13.2
+- fix CVE-2025-8176 off-by-one error skipping first line in tiffdither
+  and tiffmedian
+- Resolves: RHEL-120243
+
+* Fri Oct 10 2025 RHEL Packaging Agent <jotnar@redhat.com> - 4.4.0-13.1
+- fix CVE-2025-9900 buffer underflow in TIFFReadRGBAImageOriented
+- Resolves: RHEL-112542
+
 * Wed Aug 21 2024 Michal Hlavinka <mhlavink@redhat.com> - 4.4.0-13
 - fix CVE-2024-7006 a null pointer dereference in tif_dirinfo (RHEL-52931)
 

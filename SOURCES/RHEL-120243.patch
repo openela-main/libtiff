@@ -1,0 +1,70 @@
+From c91a4216678bd6692b4195f5c3257605f6d39a18 Mon Sep 17 00:00:00 2001
+From: Lee Howard <faxguy@howardsilvan.com>
+Date: Mon, 19 May 2025 10:53:30 -0700
+Subject: [PATCH] Don't skip the first line of the input image. Addresses issue
+ #703
+
+---
+ tools/tiffdither.c | 4 ++--
+ tools/tiffmedian.c | 9 ++++++---
+ 2 files changed, 8 insertions(+), 5 deletions(-)
+
+diff --git a/tools/tiffdither.c b/tools/tiffdither.c
+index f3f9672..42ad079 100644
+--- a/tools/tiffdither.c
++++ b/tools/tiffdither.c
+@@ -95,7 +95,7 @@ fsdither(TIFF* in, TIFF* out)
+ 	nextptr = nextline;
+ 	for (j = 0; j < imagewidth; ++j)
+ 		*nextptr++ = *inptr++;
+-	for (i = 1; i < imagelength; ++i) {
++	for (i = 0; i < imagelength; ++i) {
+ 		tmpptr = thisline;
+ 		thisline = nextline;
+ 		nextline = tmpptr;
+@@ -138,7 +138,7 @@ fsdither(TIFF* in, TIFF* out)
+ 					nextptr[0] += v / 16;
+ 			}
+ 		}
+-		if (TIFFWriteScanline(out, outline, i-1, 0) < 0)
++		if (TIFFWriteScanline(out, outline, i, 0) < 0)
+ 			goto skip_on_error;
+ 	}
+ 	goto exit_label;
+diff --git a/tools/tiffmedian.c b/tools/tiffmedian.c
+index 90c4c6a..8fc2674 100644
+--- a/tools/tiffmedian.c
++++ b/tools/tiffmedian.c
+@@ -386,7 +386,10 @@ get_histogram(TIFF* in, Colorbox* box)
+ 	}
+ 	for (i = 0; i < imagelength; i++) {
+ 		if (TIFFReadScanline(in, inputline, i, 0) <= 0)
+-			break;
++		{
++			fprintf(stderr, "Error reading scanline\n");
++			exit(EXIT_FAILURE);
++		}
+ 		inptr = inputline;
+ 		for (j = imagewidth; j-- > 0;) {
+ 			red = (*inptr++) & 0xff >> COLOR_SHIFT;
+@@ -845,7 +848,7 @@ quant_fsdither(TIFF* in, TIFF* out)
+ 	outline = (unsigned char *) _TIFFmalloc(TIFFScanlineSize(out));
+ 
+ 	GetInputLine(in, 0, goto bad);		/* get first line */
+-	for (i = 1; i <= imagelength; ++i) {
++	for (i = 0; i < imagelength; ++i) {
+ 		SWAP(short *, thisline, nextline);
+ 		lastline = (i >= imax);
+ 		if (i <= imax)
+@@ -916,7 +919,7 @@ quant_fsdither(TIFF* in, TIFF* out)
+ 				nextptr += 3;
+ 			}
+ 		}
+-		if (TIFFWriteScanline(out, outline, i-1, 0) < 0)
++		if (TIFFWriteScanline(out, outline, i, 0) < 0)
+ 			break;
+ 	}
+ bad:
+-- 
+2.47.3
+

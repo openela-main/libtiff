@@ -1,7 +1,7 @@
 Summary:       Library of functions for manipulating TIFF format image files
 Name:          libtiff
 Version:       4.0.9
-Release:       35%{?dist}
+Release:       36%{?dist}
 License:       libtiff
 Group:         System Environment/Libraries
 URL:           http://www.simplesystems.org/libtiff/
@@ -66,6 +66,10 @@ Patch45:       libtiff-4.0.9-CVE-2017-17095.patch
 # Fix buffer underflow crash for less raster rows at TIFFReadRGBAImageOriented(), RHEL-112533
 # CVE-2025-9900
 Patch46:       RHEL-112533.patch
+
+# Fix skipping first line of input image in tiffdither and tiffmedian, RHEL-120230
+# CVE-2025-8176
+Patch47:       RHEL-120230.patch
 
 BuildRequires: gcc, gcc-c++
 BuildRequires: zlib-devel libjpeg-devel jbigkit-devel
@@ -219,6 +223,10 @@ find html -name 'Makefile*' | xargs rm
 %{_mandir}/man1/*
 
 %changelog
+* Mon Nov 03 2025 RHEL Packaging Agent <jotnar@redhat.com> - 4.0.9-36
+- fix CVE-2025-8176: prevent skipping first line in tiffdither and
+  tiffmedian tools (RHEL-120230)
+
 * Tue Oct 14 2025 RHEL Packaging Agent <jotnar@redhat.com> - 4.0.9-35
 - fix CVE-2025-9900: buffer underflow crash in TIFFReadRGBAImageOriented()
   (RHEL-112533)

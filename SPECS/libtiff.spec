@@ -1,7 +1,7 @@
 Summary:       Library of functions for manipulating TIFF format image files
 Name:          libtiff
 Version:       4.4.0
-Release:       15%{?dist}
+Release:       15%{?dist}.2
 License:       libtiff
 URL:           http://www.simplesystems.org/libtiff/
 
@@ -43,6 +43,10 @@ Patch23:       libtiff-4.6.0-CVE-2024-7006.patch
 # https://gitlab.com/libtiff/libtiff/-/merge_requests/546.patch
 Patch24:       libtiff-4.4.0-CVE-2023-52356.patch
 Patch25:       libtiff-4.4.0-cve2023-52355.patch
+# CVE-2025-9900, RHEL-112545
+Patch26:       RHEL-112545.patch
+# CVE-2025-8176, RHEL-120239
+Patch27:       RHEL-120239.patch
 
 BuildRequires: gcc, gcc-c++
 BuildRequires: zlib-devel libjpeg-devel jbigkit-devel libzstd-devel libwebp-devel
@@ -201,6 +205,14 @@ find html -name 'Makefile*' | xargs rm
 %{_mandir}/man1/*
 
 %changelog
+* Mon Nov 03 2025 RHEL Packaging Agent <jotnar@redhat.com> - 4.4.0-15.2
+- fix CVE-2025-8176: tiffdither and tiffmedian skip first line of input
+  images (RHEL-120239)
+
+* Fri Oct 24 2025 RHEL Packaging Agent <jotnar@redhat.com> - 4.4.0-15.1
+- fix CVE-2025-9900: buffer underflow crash in TIFFReadRGBAImageOriented
+  (RHEL-112545)
+
 * Mon May 05 2025 Michal Hlavinka <mhlavink@redhat.com> - 4.4.0-15
 - backport documentation change for CVE-2023-52355 (RHEL-17328)
 

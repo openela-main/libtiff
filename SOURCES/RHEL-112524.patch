@@ -1,4 +1,4 @@
-From 2a4cb1ee817b995fbe23433a26d90e04f0202886 Mon Sep 17 00:00:00 2001
+From 8c951535e8551e314a66cdff01b83f055a204e8c Mon Sep 17 00:00:00 2001
 From: Su Laus <sulau@freenet.de>
 Date: Wed, 11 Jun 2025 19:45:19 +0000
 Subject: [PATCH] tif_getimage.c: Fix buffer underflow crash for less raster

@@ -12,7 +12,8 @@ Patch0:        libtiff-am-version.patch
 # from upstream, for <=4.6.0, RHEL-52926
 # https://gitlab.com/libtiff/libtiff/-/commit/3705f82b6483c7906cf08cd6b9dcdcd59c61d779
 Patch1:        libtiff-4.6.0-CVE-2024-7006.patch
-Patch2:        RHEL-112522.patch
+# Resolves: RHEL-112524
+Patch2:        RHEL-112524.patch
 
 BuildRequires: gcc, gcc-c++
 BuildRequires: zlib-devel libjpeg-devel jbigkit-devel libzstd-devel libwebp-devel liblerc-devel
@@ -65,7 +66,7 @@ image files using the libtiff library.
 
 %patch -P 0 -p1 -b .backup
 %patch -P 1 -p1 -b .CVE-2024-7006
-%patch -P 2 -p1 -b .RHEL-112522
+%patch -P 2 -p1 -b .RHEL-112524
 
 # Use build system's libtool.m4, not the one in the package.
 rm -f libtool.m4
@@ -164,9 +165,9 @@ LD_LIBRARY_PATH=$PWD:$LD_LIBRARY_PATH make check
 %{_mandir}/man1/*
 
 %changelog
-* Tue Oct 07 2025 RHEL Packaging Agent <jotnar@redhat.com> - 4.6.0-6.1
-- Fix buffer underflow crash in TIFFReadRGBAImageOriented
-- Resolves: RHEL-112522
+* Wed Oct 08 2025 RHEL Packaging Agent <jotnar@redhat.com> - 4.6.0-6.1
+- Fix buffer underflow in TIFFReadRGBAImageOriented().
+- Resolves: RHEL-112524
 
 * Mon Mar 31 2025 Michal Hlavinka <mhlavink@redhat.com> - 4.6.0-6
 - drop unused compat libtiff.so.5 (RHEL-85372)

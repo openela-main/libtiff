@@ -1,7 +1,7 @@
 Summary:       Library of functions for manipulating TIFF format image files
 Name:          libtiff
 Version:       4.0.9
-Release:       36%{?dist}
+Release:       37%{?dist}
 License:       libtiff
 Group:         System Environment/Libraries
 URL:           http://www.simplesystems.org/libtiff/
@@ -70,6 +70,10 @@ Patch46:       RHEL-112533.patch
 # Fix skipping first line of input image in tiffdither and tiffmedian, RHEL-120230
 # CVE-2025-8176
 Patch47:       RHEL-120230.patch
+
+# from upstream, for <= 4.7.1, RHEL-159316
+# https://gitlab.com/libtiff/libtiff/-/commit/782a11d6b5b61c6dc21e714950a4af5bf89f023c
+Patch48:       libtiff-4.4.0-CVE-2026-4775.patch
 
 BuildRequires: gcc, gcc-c++
 BuildRequires: zlib-devel libjpeg-devel jbigkit-devel
@@ -223,6 +227,9 @@ find html -name 'Makefile*' | xargs rm
 %{_mandir}/man1/*
 
 %changelog
+* Mon Apr 20 2026 Michal Hlavinka <mhlavink@redhat.com> - 4.0.9-37
+- fix CVE-2026-4775: signed integer overflow in putcontig8bitYCbCr44tile (RHEL-159316)
+
 * Mon Nov 03 2025 RHEL Packaging Agent <jotnar@redhat.com> - 4.0.9-36
 - fix CVE-2025-8176: prevent skipping first line in tiffdither and
   tiffmedian tools (RHEL-120230)

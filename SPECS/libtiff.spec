@@ -1,7 +1,7 @@
 Summary:       Library of functions for manipulating TIFF format image files
 Name:          libtiff
 Version:       4.4.0
-Release:       16%{?dist}
+Release:       18%{?dist}
 License:       libtiff
 URL:           http://www.simplesystems.org/libtiff/
 
@@ -49,6 +49,9 @@ Patch26:       libtiff-4.4.0-cve-2025-9900.patch
 # frin upstream, for < 4.7.1, RHEL-120238
 # https://gitlab.com/libtiff/libtiff/-/commit/fe10872e53efba9cc36c66ac4ab3b41a839d5172
 Patch27:       libtiff-4.4.0-cve-2025-8176.patch
+# from upstream, for <= 4.7.1, RHEL-159331
+# https://gitlab.com/libtiff/libtiff/-/commit/782a11d6b5b61c6dc21e714950a4af5bf89f023c
+Patch28:       libtiff-4.6.0-CVE-2026-4775.patch
 
 BuildRequires: gcc, gcc-c++
 BuildRequires: zlib-devel libjpeg-devel jbigkit-devel libzstd-devel libwebp-devel
@@ -207,6 +210,12 @@ find html -name 'Makefile*' | xargs rm
 %{_mandir}/man1/*
 
 %changelog
+* Mon May 11 2026 Michal Hlavinka <mhlavink@redhat.com> - 4.4.0-18
+- rebuild
+
+* Thu May 07 2026 Michal Hlavinka <mhlavink@redhat.com> - 4.4.0-15.3
+- fix CVE-2026-4775: signed integer overflow in putcontig8bitYCbCr44tile (RHEL-159331)
+
 * Sun Jan 18 2026 Michal Hlavinka <mhlavink@redhat.com> - 4.4.0-16
 - fix CVE-2025-9900: Out-of-Bounds Write in TIFFReadRGBAImageOriented (RHEL-112543)
 - fix CVE-2025-8176: use after free in tiffmedian (RHEL-120238)

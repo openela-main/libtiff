@@ -1,0 +1,31 @@
+diff --git a/tools/tiffcp.c b/tools/tiffcp.c
+index ebff4721d9fd2fa9cd3b3f209b88f5ae5e8b6f6a..650544e392a6639ccbcbccd4f913b208ca5c704f 100644
+--- a/tools/tiffcp.c
++++ b/tools/tiffcp.c
+@@ -221,7 +221,7 @@ int main(int argc, char *argv[])
+ 
+     *mp++ = 'w';
+     *mp = '\0';
+-    while ((c = getopt(argc, argv, "m:,:b:c:f:l:o:p:r:w:astBLMC8xh")) != -1)
++    while ((c = getopt(argc, argv, "m:,:b:c:f:l:o:p:r:w:aistBLMC8xh")) != -1)
+         switch (c)
+         {
+             case 'm':
+@@ -273,6 +273,9 @@ int main(int argc, char *argv[])
+                 else
+                     usage(EXIT_FAILURE);
+                 break;
++            case 'i': /* ignore errors */
++                ignore = TRUE;
++                break;
+             case 'l': /* tile length */
+                 outtiled = TRUE;
+                 deftilelength = atoi(optarg);
+@@ -567,6 +570,7 @@ static const char usage_info[] =
+     " -L              write little-endian instead of native byte order\n"
+     " -M              disable use of memory-mapped files\n"
+     " -C              disable strip chopping\n"
++    " -i              ignore read errors\n"
+     " -b file[,#]     bias (dark) monochrome image to be subtracted from all "
+     "others\n"
+     " -,=%            use % rather than , to separate image #'s (per Note "

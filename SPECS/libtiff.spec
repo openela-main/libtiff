@@ -1,7 +1,7 @@
 Summary:       Library of functions for manipulating TIFF format image files
 Name:          libtiff
 Version:       4.6.0
-Release:       8%{?dist}.1
+Release:       8%{?dist}.4
 License:       libtiff
 URL:           http://www.simplesystems.org/libtiff/
 
@@ -21,11 +21,22 @@ Patch3:        libtiff-4.6.0-CVE-2023-52356.patch
 # from upstream, for <= 4.7.1, RHEL-159310
 # https://gitlab.com/libtiff/libtiff/-/commit/782a11d6b5b61c6dc21e714950a4af5bf89f023c
 Patch4:        libtiff-4.6.0-CVE-2026-4775.patch
+# from upstream, for < 4.7.0, RHEL-178281
+# https://gitlab.com/libtiff/libtiff/-/commit/335947359ce2dd3862cd9f7c49f92eba065dfed4.diff
+Patch5:        libtiff-4.6.0-CVE-2023-52355.patch
+# from upstream, for < 4.7.0, RHEL-185328
+# https://gitlab.com/libtiff/libtiff/-/commit/1c3ecce8498f634346a7030b1859faca24e126f5
+Patch6:        libtiff-4.6.0-reintroduce-ignore.patch
+# from upstream, for < 4.7.2, RHEL-189374
+# https://gitlab.com/libtiff/libtiff/-/merge_requests/873.diff
+Patch7:        libtiff-4.6.0-cve-2026-12912p1of2.patch
+# https://gitlab.com/libtiff/libtiff/-/commit/f9bda11bf2fc819b971517582666d56f18b1bc3f
+Patch8:        libtiff-4.6.0-cve-2026-12912p2of2.patch
 
 BuildRequires: gcc, gcc-c++
 BuildRequires: zlib-devel libjpeg-devel jbigkit-devel libzstd-devel libwebp-devel liblerc-devel
 BuildRequires: libtool automake autoconf pkgconfig
-
+BuildRequires: python3-sphinx
 BuildRequires: make
 
 %description
@@ -76,6 +87,10 @@ image files using the libtiff library.
 %patch -P 2 -p1 -b .cve-2025-9900
 %patch -P 3 -p1 -b .CVE-2023-52356
 %patch -P 4 -p1 -b .CVE-2026-4775
+%patch -P 5 -p1 -b .CVE-2023-52355
+%patch -P 6 -p1 -b .reintroduce-ignore
+%patch -P 7 -p1 -b .cve-2026-12912p1of2
+%patch -P 8 -p1 -b .cve-2026-12912p2of2
 
 # Use build system's libtool.m4, not the one in the package.
 rm -f libtool.m4
@@ -151,6 +166,8 @@ fi
 
 %check
 LD_LIBRARY_PATH=$PWD:$LD_LIBRARY_PATH make check
+# make sure man pages were created, as it's needed for CVE-2023-52355
+test -s $RPM_BUILD_ROOT%{_mandir}/man3/TIFFOpenOptions.3tiff.gz
 
 %files
 %license LICENSE.md
@@ -174,6 +191,16 @@ LD_LIBRARY_PATH=$PWD:$LD_LIBRARY_PATH make check
 %{_mandir}/man1/*
 
 %changelog
+* Mon Jul 13 2026 Michal Hlavinka <mhlavink@redhat.com> - 4.6.0-8.4
+- fix CVE-2026-12912: heap-buffer-overflow in PixarLog 8BITABGR decode with stride 3 (RHEL-189374)
+- make sure documentation is updated during build for CVE-2023-52355 (RHEL-178281)
+
+* Mon Jun 29 2026 Michal Hlavinka <mhlavink@redhat.com> - 4.6.0-8.3
+- reintroduce ignore option -i as it is required for tests (RHEL-185328)
+
+* Wed Jun 03 2026 Michal Hlavinka <mhlavink@redhat.com> - 4.6.0-8.2
+- backport documentation change for CVE-2023-52355 (RHEL-178281)
+
 * Mon May 11 2026 Michal Hlavinka <mhlavink@redhat.com> - 4.6.0-8.1
 - fix CVE-2026-4775: signed integer overflow in putcontig8bitYCbCr44tile (RHEL-159310)
 

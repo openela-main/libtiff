@@ -1,7 +1,7 @@
 Summary:       Library of functions for manipulating TIFF format image files
 Name:          libtiff
 Version:       4.4.0
-Release:       18%{?dist}
+Release:       18%{?dist}.1
 License:       libtiff
 URL:           http://www.simplesystems.org/libtiff/
 
@@ -52,6 +52,11 @@ Patch27:       libtiff-4.4.0-cve-2025-8176.patch
 # from upstream, for <= 4.7.1, RHEL-159331
 # https://gitlab.com/libtiff/libtiff/-/commit/782a11d6b5b61c6dc21e714950a4af5bf89f023c
 Patch28:       libtiff-4.6.0-CVE-2026-4775.patch
+# from upstream, for < 4.7.2, RHEL-189387
+# https://gitlab.com/libtiff/libtiff/-/merge_requests/873
+Patch29:        libtiff-4.4.0-cve-2026-12912p1of2.patch
+# https://gitlab.com/libtiff/libtiff/-/commit/f9bda11bf2fc819b971517582666d56f18b1bc3f
+Patch30:        libtiff-4.4.0-cve-2026-12912p2of2.patch
 
 BuildRequires: gcc, gcc-c++
 BuildRequires: zlib-devel libjpeg-devel jbigkit-devel libzstd-devel libwebp-devel
@@ -210,6 +215,9 @@ find html -name 'Makefile*' | xargs rm
 %{_mandir}/man1/*
 
 %changelog
+* Tue Jul 14 2026 Michal Hlavinka <mhlavink@redhat.com> - 4.4.0-18.1
+- fix CVE-2026-12912: heap-buffer-overflow in PixarLog 8BITABGR decode with stride 3 (RHEL-189387)
+
 * Mon May 11 2026 Michal Hlavinka <mhlavink@redhat.com> - 4.4.0-18
 - rebuild
 
